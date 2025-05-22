@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.controllers.user_controller import UserController
+from app.controllers import today_pickup_mall_controller, today_pickup_agency_controller # Added imports
 from app.config.database import engine, Base
 
 # 데이터베이스 테이블 생성
@@ -25,6 +26,9 @@ app.add_middleware(
 # 라우터 등록
 user_controller = UserController()
 app.include_router(user_controller.router)
+app.include_router(today_pickup_mall_controller.router) # Added mall router
+app.include_router(today_pickup_agency_controller.router) # Added agency router
+
 
 @app.get("/")
 async def root():
