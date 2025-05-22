@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.controllers.user_controller import UserController
+from app.controllers import relay_controller # Added import
 from app.config.database import engine, Base
 
 # 데이터베이스 테이블 생성
@@ -25,6 +26,7 @@ app.add_middleware(
 # 라우터 등록
 user_controller = UserController()
 app.include_router(user_controller.router)
+app.include_router(relay_controller.router, prefix="/api", tags=["relay"]) # Added relay router
 
 @app.get("/")
 async def root():
