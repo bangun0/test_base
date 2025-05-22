@@ -51,4 +51,6 @@ uvicorn app.main:app --reload
 
 서버 실행 후 다음 URL에서 API 문서를 확인할 수 있습니다:
 - Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc 
+- ReDoc: http://localhost:8000/redoc
+
+외부 TodayPickup API에 대한 프록시 엔드포인트는 `/todaypickup` 경로 아래에 위치합니다. 예를 들어 `GET /todaypickup/v2/some-endpoint`와 같이 호출할 수 있습니다.
