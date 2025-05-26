@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from app.controllers.user_controller import UserController
+from app.controllers.todaypickup_controller import TodayPickupController
 from app.config.database import engine, Base
 
-# 데이터베이스 테이블 생성
-Base.metadata.create_all(bind=engine)
+# 데이터베이스 테이블 생성 (테스트 시 스킵 가능)
+if not os.environ.get("SKIP_DB"):
+    Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="FastAPI 서비스",
@@ -24,7 +27,9 @@ app.add_middleware(
 
 # 라우터 등록
 user_controller = UserController()
+today_controller = TodayPickupController()
 app.include_router(user_controller.router)
+app.include_router(today_controller.router)
 
 @app.get("/")
 async def root():
